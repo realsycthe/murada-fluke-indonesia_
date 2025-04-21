@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kategori Produk Fluke</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Navigasi Kembali -->
+  <div style="margin: 20px;">
+    <a href="index.html" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Kembali ke Beranda
+    </a>
+  </div>
+
+  <!-- Konten Kategori Fluke -->
+  <header class="brand-header">
+    <img src="img/fluke-banner.jpg" alt="Fluke Banner" class="brand-banner">
+    <h1>Produk Fluke</h1>
+    <p>Fluke adalah pemimpin global dalam alat pengukuran dan pengujian presisi tinggi yang mendukung produktivitas dan keamanan kerja di berbagai industri.</p>
+  </header>
+
+  <section class="filters">
+    <label>Harga Min: <input type="number" id="minPrice" placeholder="0"></label>
+    <label>Harga Max: <input type="number" id="maxPrice" placeholder="10000000"></label>
+    <button onclick="filterProducts()">Terapkan</button>
+
+    <label>Urutkan: 
+      <select id="sortOptions" onchange="sortProducts()">
+        <option value="default">Posisi</option>
+        <option value="asc">Harga Termurah</option>
+        <option value="desc">Harga Termahal</option>
+      </select>
+    </label>
+  </section>
+
+  <section class="product-grid" id="productGrid">
+    <div class="product-card" data-price="1250000">
+      <img src="img/products/fluke-1.png" alt="Fluke Digital Multimeter">
+      <h4>Fluke Digital Multimeter 117</h4>
+      <p>Harga: Rp 1.250.000</p>
+    </div>
+    <div class="product-card" data-price="2750000">
+      <img src="img/products/fluke-2.png" alt="Fluke Infrared Thermometer">
+      <h4>Fluke Infrared Thermometer 62 Max</h4>
+      <p>Harga: Rp 2.750.000</p>
+    </div>
+    <!-- Tambahkan lebih banyak produk di sini -->
+  </section>
+
+  <script>
+    function filterProducts() {
+      const min = parseInt(document.getElementById('minPrice').value) || 0;
+      const max = parseInt(document.getElementById('maxPrice').value) || Infinity;
+      const products = document.querySelectorAll('.product-card');
+
+      products.forEach(product => {
+        const price = parseInt(product.getAttribute('data-price'));
+        if (price >= min && price <= max) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+
+    function sortProducts() {
+      const option = document.getElementById('sortOptions').value;
+      const grid = document.getElementById('productGrid');
+      const products = Array.from(grid.children);
+
+      if (option === 'asc') {
+        products.sort((a, b) => a.dataset.price - b.dataset.price);
+      } else if (option === 'desc') {
+        products.sort((a, b) => b.dataset.price - a.dataset.price);
+      }
+
+      products.forEach(p => grid.appendChild(p));
+    }
+  </script>
+</body>
+
+</html>
